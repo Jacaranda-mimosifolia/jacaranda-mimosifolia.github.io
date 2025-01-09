@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="John Doe">
+    
+    
+    
+    
+    
+    
+    <title>Docker 部署 Oracle | Hexo</title>
+    <link href="http://example.com" rel="prefetch" />
+
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/jquery.min.js"></script>
+
+    
+<script src="/js/bootstrap.min.js"></script>
+
+    
+<script src="/js/aos.js"></script>
+
+    
+<script src="/js/highslide/highslide-full.min.js"></script>
+
+    
+<link rel="stylesheet" href="/js/highslide/highslide.css">
+
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://example.com" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/about" class="menuItem" style="left: 50%; top: 85%;">关于</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="http://example.com">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">Hexo</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/categories">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/Hexo/">&lt;Hexo&gt;</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/Windows/">&lt;Windows&gt;</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">&lt;远程连接&gt;</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="http://example.com">Hexo</a>
+        >
+        <span>Docker 部署 Oracle</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/">Docker 部署 Oracle</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/Docker/">&lt;Docker&gt;</a>, 
+                
+                <a href="/tags/Oracle/">&lt;Oracle&gt;</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2024-12-12
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/">Docker 部署 Oracle</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2024-12-12
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/Docker/">&lt;Docker&gt;</a>, 
+                
+                <a href="/tags/Oracle/">&lt;Oracle&gt;</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="一、Oracle-Install"><a href="#一、Oracle-Install" class="headerlink" title="一、Oracle Install"></a>一、Oracle Install</h2><h3 id="1-创建-oracle-容器"><a href="#1-创建-oracle-容器" class="headerlink" title="1. 创建 oracle 容器"></a>1. 创建 oracle 容器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 镜像网址</span><br><span class="line">https://hub.docker.com/r/datagrip/oracle</span><br><span class="line"></span><br><span class="line"># 拉取 oracle 镜像</span><br><span class="line">docker pull datagrip/oracle:19.3-se</span><br><span class="line"></span><br><span class="line"># 创建 oracle 容器</span><br><span class="line"># -m 分配容器6g运行内存</span><br><span class="line"># -c 分配容器4c运行线程</span><br><span class="line"># -v 挂载了三个主要目录</span><br><span class="line"># -p 配置了两个端口映射</span><br><span class="line"># -e 配置SID、DATABASE、PWD、CHARACTERSET</span><br><span class="line">docker run -d --name oracle \</span><br><span class="line">    -m 6g \</span><br><span class="line">    -c 4 \</span><br><span class="line">    -v oracle_etc:/etc/ \</span><br><span class="line">    -v oracle_home:/home/ \</span><br><span class="line">    -v oracle_opt:/opt/ \</span><br><span class="line">    -p 1521:1521 \</span><br><span class="line">    -p 5500:5500 \</span><br><span class="line">    -e ORACLE_SID=ORCL \</span><br><span class="line">    -e ORACLE_PWD=123456 \</span><br><span class="line">    -e ORACLE_DATABASE=ORCL \</span><br><span class="line">    datagrip/oracle:19.3-se</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建-Oracle-用户"><a href="#2-创建-Oracle-用户" class="headerlink" title="2. 创建 Oracle 用户"></a>2. 创建 Oracle 用户</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 进入 oracle 容器</span><br><span class="line">docker exec -it oracle bash</span><br><span class="line"></span><br><span class="line"># 管理员登录</span><br><span class="line">sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line"># 创建通用用户</span><br><span class="line">CREATE USER C##chen IDENTIFIED BY 123456;</span><br><span class="line">GRANT DBA TO C##chen;</span><br><span class="line"></span><br><span class="line"># 解除用户锁</span><br><span class="line">ALTER USER C##chen ACCOUNT UNLOCK;</span><br><span class="line"></span><br><span class="line"># 修改 sys system 密码</span><br><span class="line">ALTER USER SYS IDENTIFIED BY 123456;</span><br><span class="line">ALTER USER SYSTEM IDENTIFIED BY 123456;</span><br><span class="line"></span><br><span class="line"># 设置密码永不过期</span><br><span class="line">ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;</span><br><span class="line"></span><br><span class="line"># 测试登录</span><br><span class="line">sqlplus C##chen/123456@//127.0.0.1:1521/</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="3. 配置环境变量"></a>3. 配置环境变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export ORACLE_SID=ORCL</span><br><span class="line">export ORACLE_BASE=/var/lib/docker/volumes/oracle_opt/_data/oracle</span><br><span class="line">export ORACLE_HOME=$ORACLE_BASE/product/19c/dbhome_1</span><br><span class="line">export PATH=$PATH:$ORACLE_HOME/bin</span><br><span class="line"></span><br><span class="line">echo $ORACLE_SID</span><br><span class="line">echo $ORACLE_BASE</span><br><span class="line">echo $ORACLE_HOME</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-配置防火墙"><a href="#4-配置防火墙" class="headerlink" title="4. 配置防火墙"></a>4. 配置防火墙</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -p tcp --dport 1521 -j ACCEPT</span><br><span class="line">sudo iptables -A INPUT -p tcp --dport 5500 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、-Client-Install"><a href="#二、-Client-Install" class="headerlink" title="二、 Client Install"></a>二、 Client Install</h2><h3 id="1-Client-Home"><a href="#1-Client-Home" class="headerlink" title="1. Client Home"></a>1. Client Home</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">client_home是完整的客户端，拥有所有 oracle 开发、监听、连接服务</span><br><span class="line">但此处我用的是docker管理oracle容器，client_home实在太笨重了，且需要安装到oracle指定目录，因此不选择</span><br><span class="line"></span><br><span class="line"># 下载网址，这里选择 LINUX.X64_193000_client_home.zip 941.7 MB</span><br><span class="line">https://www.oracle.com/cn/database/technologies/oracle19c-linux-downloads.html</span><br><span class="line"></span><br><span class="line"># 解压到 ubuntu-24.04</span><br><span class="line">unzip /mnt/c/Users/35422/Downloads/LINUX.X64_193000_client_home.zip -d /home/oracle/oracle_client</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Instant-Client"><a href="#2-Instant-Client" class="headerlink" title="2. Instant Client"></a>2. Instant Client</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">Instant_Client是轻量型客户端，拥有基本的 oracle 监听、连接服务</span><br><span class="line">* basic 安装包具备oracle基本开发、监控功能</span><br><span class="line">* sqlplus 工具包具备sqlplus连接工具，可用来连接oracle数据库，提供脚本管理、数据库管理</span><br><span class="line"></span><br><span class="line"># 下载网址：这里选择 Version 19.23.0.0.0 (Requires glibc 2.14)</span><br><span class="line">https://www.oracle.com/cn/database/technologies/instant-client/linux-x86-64-downloads.html</span><br><span class="line"></span><br><span class="line"># 需要下载basic和sqlplus并解压到同一个文件夹中</span><br><span class="line">unzip /mnt/e/Download/DownLoad/instantclient-basic-linux.x64-19.23.0.0.0dbru.zip -d /home/oracle/oracle_client</span><br><span class="line">unzip /mnt/e/Download/DownLoad/instantclient-sqlplus-linux.x64-19.23.0.0.0dbru.zip -d /home/oracle/oracle_client</span><br><span class="line"></span><br><span class="line"># 配置环境变量</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/oracle/oracle_client/instantclient_19_23</span><br><span class="line">export PATH=$PATH:/home/oracle/oracle_client/instantclient_19_23</span><br><span class="line"></span><br><span class="line"># 运行安装文件</span><br><span class="line">/home/oracle/oracle_client/instantclient_19_23/.sqlplus</span><br><span class="line"></span><br><span class="line"># 注意缺少依赖报错</span><br><span class="line">sqlplus: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory</span><br><span class="line"></span><br><span class="line"># 查看 ./sqlplus缺少哪些依赖</span><br><span class="line">ldd /home/oracle/oracle_client/instantclient_19_23/sqlplus</span><br><span class="line"></span><br><span class="line">linux-vdso.so.1 (0x00007ffddc3b3000)</span><br><span class="line">        libsqlplus.so =&gt; /home/oracle_client/instantclient_19_23/libsqlplus.so (0x00007f0c67c00000)</span><br><span class="line">        libclntsh.so.19.1 =&gt; /home/oracle_client/instantclient_19_23/libclntsh.so.19.1 (0x00007f0c63800000)</span><br><span class="line">        libclntshcore.so.19.1 =&gt; /home/oracle_client/instantclient_19_23/libclntshcore.so.19.1 (0x00007f0c63200000)</span><br><span class="line">        libnnz19.so =&gt; /home/oracle_client/instantclient_19_23/libnnz19.so (0x00007f0c62a00000)</span><br><span class="line">        libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f0c67f7d000)</span><br><span class="line">        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f0c63117000)</span><br><span class="line">        libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f0c67f76000)</span><br><span class="line">        libnsl.so.1 =&gt; /lib/x86_64-linux-gnu/libnsl.so.1 (0x00007f0c67f5a000)</span><br><span class="line">        librt.so.1 =&gt; /lib/x86_64-linux-gnu/librt.so.1 (0x00007f0c67f55000)</span><br><span class="line">        libaio.so.1 =&gt; not found</span><br><span class="line">        libresolv.so.2 =&gt; /lib/x86_64-linux-gnu/libresolv.so.2 (0x00007f0c67f42000)</span><br><span class="line">        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f0c627ee000)</span><br><span class="line">        /lib64/ld-linux-x86-64.so.2 (0x00007f0c67f8a000)</span><br><span class="line">        libaio.so.1 =&gt; not found</span><br><span class="line">        libaio.so.1 =&gt; not found</span><br><span class="line">        libaio.so.1 =&gt; not found</span><br><span class="line"></span><br><span class="line"># 安装 libaio1t64，注意在 ubuntu-24.04 中，libaio 改名成了 libaio1t64</span><br><span class="line">apt-get install libaio1t64</span><br><span class="line"></span><br><span class="line"># 创建符号链接</span><br><span class="line">ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1</span><br><span class="line"></span><br><span class="line"># 测试连接</span><br><span class="line">sqlplus C##chen/123456@//127.0.0.1:1521/ORCLCDB</span><br><span class="line"></span><br><span class="line"># sql*plus快速入门：</span><br><span class="line">https://docs.oracle.com/cd/B14117_01/server.101/b12170/qstart.htm</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Oracle-Enterprise-Manager"><a href="#3-Oracle-Enterprise-Manager" class="headerlink" title="3. Oracle Enterprise Manager"></a>3. Oracle Enterprise Manager</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Oracle Enterprise Manager 企业管理器，简称OEM，提供友好的GUI，具备监管、查看、修改功能</span><br><span class="line"></span><br><span class="line"># 下载网址，这里选择 Oracle Database 19c Examples (19.3) for Linux x86-64</span><br><span class="line">https://www.oracle.com/cn/database/technologies/oracle19c-linux-downloads.html</span><br><span class="line"></span><br><span class="line"># 解压到linux</span><br><span class="line">unzip /mnt/e/Download/DownLoad/LINUX.X64_193000_examples.zip -d /home/oracle/oem</span><br><span class="line"># 运行安装文件，且需要运行linux访问弹窗，任何要在弹窗中执行安装步骤，反正我是卡在第一步，死活找不到在oracle中指定的安装路径</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Oracle-Machine-Learning"><a href="#4-Oracle-Machine-Learning" class="headerlink" title="4. Oracle Machine Learning"></a>4. Oracle Machine Learning</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Oracle Machine Learning 机器学习工具，检查OML，提供GUI、集成机器学习模型</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Oracle-Config"><a href="#三、Oracle-Config" class="headerlink" title="三、Oracle Config"></a>三、Oracle Config</h2><h3 id="1-Oracle-Network"><a href="#1-Oracle-Network" class="headerlink" title="1. Oracle Network"></a>1. Oracle Network</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">网络配置：</span><br><span class="line">https://docs.oracle.com/en/database/oracle/oracle-database/19/netrf/index.html#GUID-9988A30D-7D01-426B-9735-17EC2F0B4A85</span><br><span class="line"></span><br><span class="line"># 常用语法</span><br><span class="line">lsnrctl start           启动</span><br><span class="line">lsnrctl stop            停止</span><br><span class="line">lsnrctl reload          重载</span><br><span class="line">lsnrctl status          状态</span><br><span class="line">lsnrctl version         版本</span><br><span class="line">lsnrctl services        服务</span><br><span class="line"></span><br><span class="line"># 编辑 listener.ora</span><br><span class="line">vim $ORACLE_HOME/network/admin/listener.ora</span><br><span class="line"></span><br><span class="line"># 此处存在软连接 listener.ora</span><br><span class="line">vim /var/lib/docker/volumes/oracle_opt/_data/oracle/oradata/dbconfig/ORCL/listener.ora</span><br><span class="line"></span><br><span class="line"># 配置 LD_LIBRARY_PATH 使得lib导向了 oracle 的lib非常严重影响 linux 环境</span><br><span class="line">export LD_LIBRARY_PATH=$ORACLE_HOME/lib</span><br><span class="line">lsnrctl reload</span><br><span class="line">export LD_LIBRARY_PATH=</span><br><span class="line"></span><br><span class="line"># 插个眼，lsnrctl启用时，会占用docker oracle 1521端口，待处理</span><br><span class="line"># oracle用户无运行oracle容器权限</span><br><span class="line"># 修改权限出现问题，就连root都无法运行容器了</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、Oracle-Uninstall"><a href="#四、Oracle-Uninstall" class="headerlink" title="四、Oracle Uninstall"></a>四、Oracle Uninstall</h2><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 停止容器</span><br><span class="line">docker stop oracle</span><br><span class="line"></span><br><span class="line"># 删除容器</span><br><span class="line">docker rm oracle</span><br><span class="line"></span><br><span class="line"># 删除挂载</span><br><span class="line">docker volume rm oracle_home</span><br><span class="line">docker volume rm oracle_etc</span><br><span class="line">docker volume rm oracle_opt</span><br><span class="line"></span><br><span class="line"># 查看</span><br><span class="line">docker ps -a</span><br><span class="line">docker volume ls </span><br></pre></td></tr></table></figure>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            John Doe
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/25/Tmux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Tmux 常用命令</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/">Docker 部署 Oracle</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/02/Docker-%E9%83%A8%E7%BD%B2-Mysql/">Docker 部署 Mysql</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/24/Docker-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Docker 常用命令</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/20/Docker-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Docker 安装配置</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/16/Linux-%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">Linux 云服务器</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/12/Linux-%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">Linux 远程连接</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/08/Linux-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux 环境变量</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/04/Linux-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/">Linux 文件权限</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/03/Linux-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">Linux 用户管理</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/09/18/Zerotier-Moonlight-Parsec%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">Zerotier+Moonlight+Parsec远程连接</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/20/Docker-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Docker 安装配置</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/">Docker 部署 Oracle</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/24/Docker-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Docker 常用命令</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/02/Docker-%E9%83%A8%E7%BD%B2-Mysql/">Docker 部署 Mysql</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/16/Linux-%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">Linux 云服务器</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/04/Linux-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/">Linux 文件权限</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/03/Linux-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/">Linux 用户管理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/11/12/Linux-%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">Linux 远程连接</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2024/12/25/Tmux-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Tmux 常用命令</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2024/12/12/Docker-%E9%83%A8%E7%BD%B2-Oracle/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/Hexo/" style="font-size: 15.523355592456324px;" class="tag-cloud-link">&lt;Hexo&gt;</a>
+    
+    <a href="/tags/Windows/" style="font-size: 13.422747233482724px;" class="tag-cloud-link">&lt;Windows&gt;</a>
+    
+    <a href="/tags/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" style="font-size: 16.652543667388823px;" class="tag-cloud-link">&lt;远程连接&gt;</a>
+    
+    <a href="/tags/WSL/" style="font-size: 16.947543802748754px;" class="tag-cloud-link">&lt;WSL&gt;</a>
+    
+    <a href="/tags/Linux/" style="font-size: 9.24760357802362px;" class="tag-cloud-link">&lt;Linux&gt;</a>
+    
+    <a href="/tags/Docker/" style="font-size: 14.79290848552948px;" class="tag-cloud-link">&lt;Docker&gt;</a>
+    
+    <a href="/tags/Oracle/" style="font-size: 12.637001383722911px;" class="tag-cloud-link">&lt;Oracle&gt;</a>
+    
+    <a href="/tags/Mysql/" style="font-size: 14.263136101545367px;" class="tag-cloud-link">&lt;Mysql&gt;</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum</a>
+    </li>
+    
+    <li>
+        <a href="http://www.gal123.com/" target="_blank">绅士导航♂</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">萌导航</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/Jacaranda-mimosifolia" target="_blank">Github</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 John Doe Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+
+<script src="/js/activate-power-mode.js"></script>
+
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+
+<script src="/js/oni.js"></script>
+
+
+
+
+</html>
